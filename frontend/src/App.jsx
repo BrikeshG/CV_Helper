@@ -109,7 +109,7 @@ function App() {
 
     try {
       const response = await axios.post(`${API_BASE_URL}/generate-cv`, {
-        userText,
+        userText: userText || "Default experience to prevent errors", // Safety fallback
         jobDescription,
         tone,
         length
