@@ -100,8 +100,12 @@ app.post('/api/generate-cv', async (req, res) => {
 
         res.json({ cvData: result.cvData });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to generate CV' });
+        console.error("CV Generation Error:", error);
+        // DEBUG: Send actual error to frontend to help user debug deployment
+        res.status(500).json({
+            error: error.message || "Failed to generate CV",
+            details: error.response?.data || "Check Render Logs"
+        });
     }
 });
 
