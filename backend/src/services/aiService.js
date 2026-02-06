@@ -62,7 +62,7 @@ async function generateCVAndCoverLetter(userText, jobDescription, tone = 'Profes
 
     try {
         const completion = await openai.beta.chat.completions.parse({
-            model: "gpt-4o-2024-08-06",
+            model: "gpt-4o-mini", // Switch to Mini for better availability/speed
             messages: [
                 { role: "system", content: "You are a helpful assistant that generates structured resumes." },
                 { role: "user", content: prompt },
@@ -73,7 +73,7 @@ async function generateCVAndCoverLetter(userText, jobDescription, tone = 'Profes
         return completion.choices[0].message.parsed;
     } catch (error) {
         console.error("Error generating CV:", error);
-        throw new Error("Failed to generate CV from AI.");
+        throw error; // Propagate original error to server.js
     }
 }
 
@@ -104,7 +104,7 @@ async function generateCoverLetter(cvData, jobDescription) {
 
     try {
         const completion = await openai.beta.chat.completions.parse({
-            model: "gpt-4o-2024-08-06",
+            model: "gpt-4o-mini",
             messages: [
                 { role: "system", content: "You are an expert career coach writing a cover letter." },
                 { role: "user", content: prompt },
@@ -115,7 +115,7 @@ async function generateCoverLetter(cvData, jobDescription) {
         return completion.choices[0].message.parsed;
     } catch (error) {
         console.error("Error generating Cover Letter:", error);
-        throw new Error("Failed to generate Cover Letter.");
+        throw error; // Propagate original error
     }
 }
 
