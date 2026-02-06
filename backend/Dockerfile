@@ -18,7 +18,10 @@ WORKDIR /usr/src/app
 # Copy package files
 COPY package*.json ./
 
-# Install app dependencies
+# ENV to skip chromium download (we use the installed google-chrome-stable)
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+
 # Install app dependencies
 RUN npm install
 
